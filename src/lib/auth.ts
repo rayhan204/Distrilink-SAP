@@ -1,4 +1,4 @@
-import type { AuthUser } from "../types/auth";
+import type { AuthUser } from "@/types";
 import { AUTH_STORAGE_KEY } from "./constants";
 
 export function getAuthUser(): AuthUser | null {

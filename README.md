@@ -2,8 +2,7 @@
 
 Dashboard analisa performa salesman: login, summary metrik, tabel, chart, search & filter.
 
-![Dashboard](./docs/dashboard.png)
-![Login](./docs/login.png)
+![Dashboard](./docs/distrilink.jpg)
 
 ## Tech Stack
 

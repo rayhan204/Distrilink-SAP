@@ -1,6 +1,5 @@
 import type { AuthUser } from "@/types";
-
-const AUTH_STORAGE_KEY = "distrilink_auth";
+import { AUTH_STORAGE_KEY } from "@/lib/constants";
 
 export function setAuthUser(user: AuthUser) {
   localStorage.setItem(

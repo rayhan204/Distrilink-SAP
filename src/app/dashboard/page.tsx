@@ -16,8 +16,9 @@ import { SalesTable } from "@/components/SalesTable";
 import { SummaryCard } from "@/components/SummaryCard";
 
 import salesData from "@/data/sales.json";
-import { formatCurrency } from "@/lib/utils";
+import { calculateSalesSummary, formatCurrency } from "@/lib/utils";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import { ROUTES } from "@/lib/constants";
 
 import type { SalesPerformance } from "@/types";
 
@@ -47,7 +48,7 @@ export default function DashboardPage() {
   // Redirect jika belum login
   useEffect(() => {
     if (!loading && !user) {
-      router.replace("/login");
+      router.replace(ROUTES.LOGIN);
     }
   }, [loading, user, router]);
 
@@ -73,40 +74,11 @@ export default function DashboardPage() {
     });
   }, [search, area]);
 
-  // Hitung seluruh metrik
-  const metrics = useMemo(() => {
-    const result = filteredSales.reduce(
-      (acc, item) => ({
-        visits:
-          acc.visits + item.kunjungan_realisasi,
-
-        effectiveness:
-          acc.effectiveness +
-          item.efektivitas_visit_persen,
-
-        order:
-          acc.order + item.total_order_rp,
-
-        oos:
-          acc.oos + item.jumlah_order_oos,
-      }),
-      {
-        visits: 0,
-        effectiveness: 0,
-        order: 0,
-        oos: 0,
-      }
-    );
-
-    return {
-      visits: result.visits,
-      effectiveness: filteredSales.length
-        ? result.effectiveness / filteredSales.length
-        : 0,
-      order: result.order,
-      oos: result.oos,
-    };
-  }, [filteredSales]);
+  // Hitung seluruh metrik dari data yang sedang ditampilkan (hasil filter)
+  const metrics = useMemo(
+    () => calculateSalesSummary(filteredSales),
+    [filteredSales]
+  );
 
   // Loading session
   if (loading) {

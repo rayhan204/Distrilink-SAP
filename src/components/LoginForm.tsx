@@ -5,6 +5,7 @@ import { ArrowRight, Eye, EyeOff, LockKeyhole, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { setAuthUser } from "@/lib/auth";
 import { login } from "@/services/auth.service";
+import { ROUTES } from "@/lib/constants";
 import Image from "next/image";
 
 export function LoginForm() {
@@ -25,7 +26,7 @@ export function LoginForm() {
     try {
       const user = await login({ username: username.trim(), password });
       setAuthUser(user);
-      router.replace("/dashboard");
+      router.replace(ROUTES.DASHBOARD);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Login gagal. Silakan coba lagi.");
     } finally {

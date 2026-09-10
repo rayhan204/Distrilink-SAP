@@ -28,13 +28,14 @@ export function SalesTable({ sales }: SalesTableProps) {
 
       {/* TABLE */}
       <div className="overflow-x-auto">
-        <table className="w-full min-w-190 text-left text-xs">
+        <table className="w-full min-w-215 text-left text-xs">
           
           <thead className="bg-slate-50 text-[10px] uppercase tracking-wide text-slate-400">
             <tr>
               <th className="px-3 py-3 font-bold">Salesman</th>
               <th className="px-3 py-3 font-bold">Area</th>
               <th className="px-3 py-3 text-center font-bold">Visit</th>
+              <th className="px-3 py-3 text-center font-bold">Unplanned</th>
               <th className="px-3 py-3 text-center font-bold">Efektivitas</th>
               <th className="px-3 py-3 text-right font-bold">Order</th>
               <th className="px-3 py-3 text-center font-bold">OOS</th>
@@ -70,6 +71,13 @@ export function SalesTable({ sales }: SalesTableProps) {
                 <td className="px-3 py-3 text-center">
                   <span className="font-semibold text-slate-900">{item.kunjungan_realisasi}</span>
                   <span className="text-slate-400">/{item.kunjungan_planned}</span>
+                </td>
+
+                {/* UNPLANNED */}
+                <td className="px-3 py-3 text-center">
+                  <span className={item.kunjungan_unplanned > 0 ? "font-semibold text-slate-700" : "text-slate-400"}>
+                    {item.kunjungan_unplanned}
+                  </span>
                 </td>
 
                 {/* EFFECTIVENESS */}

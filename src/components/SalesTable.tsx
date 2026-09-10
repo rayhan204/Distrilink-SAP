@@ -1,6 +1,6 @@
 import { MapPin } from "lucide-react";
 import type { SalesPerformance } from "@/types";
-import { formatCurrency } from "@/lib/utils";
+import { calculateVisitEffectiveness, formatCurrency } from "@/lib/utils";
 import { PerformanceBadge } from "./PerformanceBadge";
 
 interface SalesTableProps {
@@ -82,7 +82,7 @@ export function SalesTable({ sales }: SalesTableProps) {
 
                 {/* EFFECTIVENESS */}
                 <td className="px-3 py-3 flex justify-center">
-                  <PerformanceBadge percentage={item.efektivitas_visit_persen} />
+                  <PerformanceBadge percentage={calculateVisitEffectiveness(item)} />
                 </td>
 
                 {/* ORDER */}

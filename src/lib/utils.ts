@@ -9,6 +9,15 @@ export function formatCurrency(value: number): string {
   }).format(value);
 }
 
+// Formula resmi efektivitas visit: (kunjungan_realisasi / kunjungan_planned) x 100.
+// Dihitung di sini (bukan disimpan sebagai field statis di dataset) agar nilainya
+// selalu akurat mengikuti kunjungan_planned & kunjungan_realisasi terbaru —
+// menghindari data yang tidak sinkron kalau salah satu angka diubah manual.
+export function calculateVisitEffectiveness(sales: SalesPerformance): number {
+  if (sales.kunjungan_planned <= 0) return 0;
+  return (sales.kunjungan_realisasi / sales.kunjungan_planned) * 100;
+}
+
 export function getPerformanceStatus(percentage: number) {
   if (percentage >= PERFORMANCE_THRESHOLDS.EXCELLENT) return "Excellent";
   if (percentage >= PERFORMANCE_THRESHOLDS.GOOD) return "Good";
@@ -31,7 +40,7 @@ export function calculateSalesSummary(sales: SalesPerformance[]): SalesSummary {
   const order = sales.reduce((sum, item) => sum + item.total_order_rp, 0);
   const oos = sales.reduce((sum, item) => sum + item.jumlah_order_oos, 0);
   const effectiveness = sales.length
-    ? sales.reduce((sum, item) => sum + item.efektivitas_visit_persen, 0) / sales.length
+    ? sales.reduce((sum, item) => sum + calculateVisitEffectiveness(item), 0) / sales.length
     : 0;
 
   return { visits, effectiveness, order, oos };

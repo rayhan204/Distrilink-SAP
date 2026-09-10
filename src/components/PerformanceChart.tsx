@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import type { SalesPerformance } from "@/types";
+import { calculateVisitEffectiveness } from "@/lib/utils";
 
 interface PerformanceChartProps {
   sales: SalesPerformance[];
@@ -28,7 +29,7 @@ export function PerformanceChart({ sales }: PerformanceChartProps) {
   const chartData = sales.map((item) => ({
     name: item.nama_sales.split(" ")[0],
     fullName: item.nama_sales,
-    efektivitas: item.efektivitas_visit_persen,
+    efektivitas: Math.round(calculateVisitEffectiveness(item)),
   }));
 
   return (
